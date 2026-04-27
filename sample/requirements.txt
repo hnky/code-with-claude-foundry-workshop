@@ -1,3 +1,4 @@
 agent-framework
 agent-framework-foundry
 python-dotenv
+azure-identity

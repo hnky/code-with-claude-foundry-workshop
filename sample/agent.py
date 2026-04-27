@@ -6,22 +6,40 @@ import os
 from dotenv import load_dotenv
 
 from agent_framework import Agent, MCPStreamableHTTPTool
-from agent_framework.foundry import AnthropicFoundryClient
 
 # 1. Load environment variables from .env
 load_dotenv()
 
 
+def _create_chat_client():
+    """Create the appropriate Foundry chat client based on MODEL_PROVIDER."""
+    provider = os.environ.get("MODEL_PROVIDER", "anthropic").lower()
+
+    if provider == "openai":
+        from azure.identity import DefaultAzureCredential
+        from agent_framework.foundry import FoundryChatClient
+
+        return FoundryChatClient(
+            project_endpoint=os.environ["FOUNDRY_PROJECT_ENDPOINT"],
+            model=os.environ["FOUNDRY_MODEL_DEPLOYMENT"],
+            credential=DefaultAzureCredential(),
+        )
+    else:
+        from agent_framework.foundry import AnthropicFoundryClient
+
+        return AnthropicFoundryClient(
+            model=os.environ["FOUNDRY_MODEL_DEPLOYMENT"],
+            api_key=os.environ["FOUNDRY_API_KEY"],
+            base_url=os.environ["FOUNDRY_ENDPOINT"],
+        )
+
+
 async def main() -> None:
     # 2. Read the agent's instructions (system prompt)
-    instructions = open("instructions.md").read()
+    instructions = open("instructions.md", encoding="utf-8").read()
 
-    # 3. Configure the chat model (Claude on Microsoft Foundry)
-    chat_client = AnthropicFoundryClient(
-        model=os.environ["FOUNDRY_MODEL_DEPLOYMENT"],
-        api_key=os.environ["FOUNDRY_API_KEY"],
-        base_url=os.environ["FOUNDRY_ENDPOINT"],
-    )
+    # 3. Configure the chat model
+    chat_client = _create_chat_client()
 
     # 4. Connect to the Cupcake Store MCP server
     mcp_tool = MCPStreamableHTTPTool(

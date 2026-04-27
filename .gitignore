@@ -1,9 +1,15 @@
 # Environment / secrets
 .env
 .env.local
+.env.*
 *.env
 !.env.sample
-!agent-framework/.env
+!**/.env.sample
+
+# Local command output / scratch files
+smoke_test.py
+test_output.txt
+install_log.txt
 
 # Python
 __pycache__/

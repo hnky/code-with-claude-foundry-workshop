@@ -3,6 +3,7 @@
 .env.local
 *.env
 !.env.sample
+!agent-framework/.env
 
 # Python
 __pycache__/

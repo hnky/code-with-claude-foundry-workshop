@@ -57,12 +57,13 @@ In this lab you will:
 > 📸 **Screenshot placeholder:** Deployment details panel showing Target URI and Key (blur the key!).
 > Save as `workshop/images/03-endpoint-keys.png`.
 
-3. In the `agent-framework/` folder, create a `.env` file:
+3. Open the existing `.env` file in the `agent-framework/` folder and replace
+   the placeholder values with the ones you just copied:
 
    ```env
-   FOUNDRY_ENDPOINT=https://<your-resource>.services.ai.azure.com/anthropic
-   FOUNDRY_API_KEY=<your-api-key>
-   FOUNDRY_MODEL_DEPLOYMENT=<your-deployment-name>
+   FOUNDRY_ENDPOINT="https://<your-resource>.services.ai.azure.com/anthropic"
+   FOUNDRY_API_KEY="<your-api-key>"
+   FOUNDRY_MODEL_DEPLOYMENT="<your-deployment-name>"
    ```
 
 
@@ -77,7 +78,7 @@ Open a terminal in the `agent-framework/` folder:
 cd agent-framework
 ```
 
-Create a `requirements.txt` file with the following contents:
+The folder already contains a `requirements.txt` with the dependencies you need:
 
 ```txt
 agent-framework
@@ -85,7 +86,7 @@ agent-framework-foundry
 python-dotenv
 ```
 
-Install the dependencies:
+Install them:
 
 ```bash
 pip install -r requirements.txt

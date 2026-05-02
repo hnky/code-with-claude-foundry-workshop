@@ -8,7 +8,6 @@ In this lab you will:
    - A minimal "hello world" agent
    - Connect to the **Cupcake Store MCP server** for tools
    - Load the agent's **instructions** and **welcome banner** as MCP prompts
-   - Polish the chat experience
 
 **Prerequisites**
 - Access to an Azure subscription with Microsoft Foundry
@@ -94,7 +93,7 @@ pip install -r requirements.txt
 ```
 
 Create an empty `agent.py` file in the same folder. You'll build it up in
-four small steps. After each step, run:
+three small steps. After each step, run:
 
 ```bash
 python agent.py
@@ -141,23 +140,29 @@ async def main() -> None:
     print("Type 'exit' to quit.\n")
 
     while True:
-        user_input = input("You: ")
+        user_input = input("\033[1;35mYou:\033[0m\n")
         if user_input.lower() in ("exit", "quit"):
             break
 
         response = await agent.run(user_input, session=session)
-        print(f"Assistant: {response.text}\n")
+        print(f"\n\033[1;35mAssistant:\033[0m\n{response.text}\n")
 
 
 if __name__ == "__main__":
     asyncio.run(main())
 ```
 
+The `\033[1;35m...\033[0m` escape codes print `You:` and `Assistant:` in
+bold magenta so the transcript is easier to read.
+
 **Try it:**
 
 ```
-You: Hello!
-Assistant: Hi there! How can I help you today?
+You:
+Hello!
+
+Assistant:
+Hi there! How can I help you today?
 ```
 
 > 📸 **Screenshot placeholder:** Terminal showing the first "Hello" exchange.
@@ -218,12 +223,12 @@ async def main() -> None:
     print("Type 'exit' to quit.\n")
 
     while True:
-        user_input = input("You: ")
+        user_input = input("\033[1;35mYou:\033[0m\n")
         if user_input.lower() in ("exit", "quit"):
             break
 
         response = await agent.run(user_input, session=session)
-        print(f"Assistant: {response.text}\n")
+        print(f"\n\033[1;35mAssistant:\033[0m\n{response.text}\n")
 
     await mcp_tool.close()
 
@@ -235,10 +240,11 @@ if __name__ == "__main__":
 **Try it:**
 
 ```
-You: What flavors do you have today?
-Assistant: Here's what we have in stock today: ...
-You: I'll take one chocolate cupcake.
-Assistant: Great choice! I've placed the order ...
+You:
+What flavors do you have today?
+
+Assistant:
+Here's what we have in stock today: ...
 ```
 
 The agent is now calling MCP tools on the Cupcake Store server. But it's
@@ -293,69 +299,39 @@ async def main() -> None:
     print(banner)                                                      # 👈 new
     print("Type 'exit' to quit.\n")
 
-    while True:
-        user_input = input("You: ")
-        if user_input.lower() in ("exit", "quit"):
-            break
-
-        response = await agent.run(user_input, session=session)
-        print(f"Assistant: {response.text}\n")
-
-    await mcp_tool.close()
-```
-
-**Try it:** You should now see the welcome banner first, and the agent
-behaves as a friendly cupcake-shop concierge.
-
-```
-🧁 Welcome to the Cupcake Store! ...
-
-You: Hi
-Assistant: Hi there! Ready to pick out a cupcake? ...
-```
-
-> 📸 **Screenshot placeholder:** Terminal showing the banner and the agent greeting in-character.
-> Save as `workshop/images/06-step3-prompts.png`.
-
-
-
-### Step 4 - Polish the Chat Experience
-
-Two small touches to make the demo feel finished:
-
-1. **Auto-kick off** the conversation by sending a `"hello"` so the agent
-   greets the user first.
-2. **Colorize** the `You:` and `Assistant:` labels with bold magenta so the
-   transcript is easier to read.
-
-Replace the chat loop section (step 6) with this:
-
-```python
-    # 6. Start a chat session and talk to the agent
-    session = agent.create_session()
-    print(banner)
-    print("Type 'exit' to quit.\n")
-
     # Kick things off automatically                                    👈 new
     response = await agent.run("hello", session=session)
     print(f"\033[1;35mAssistant:\033[0m\n{response.text}\n")
 
     while True:
-        user_input = input("\033[1;35mYou:\033[0m\n")                  # 👈 updated
+        user_input = input("\033[1;35mYou:\033[0m\n")
         if user_input.lower() in ("exit", "quit"):
             break
 
         response = await agent.run(user_input, session=session)
-        print(f"\n\033[1;35mAssistant:\033[0m\n{response.text}\n")     # 👈 updated
+        print(f"\n\033[1;35mAssistant:\033[0m\n{response.text}\n")
 
     await mcp_tool.close()
+```
+
+The agent now also kicks off the conversation itself by sending a `"hello"`,
+so the user sees the persona greet them right away.
+
+**Try it:** You should now see the welcome banner first, then the agent
+greeting you in-character as a friendly cupcake-shop concierge.
+
+```
+🧁 Welcome to the Cupcake Store! ...
+
+Assistant:
+Hi there! Ready to pick out a cupcake? ...
 ```
 
 That's it - your `agent.py` now matches the final sample in
 [`sample/agent.py`](../sample/agent.py).
 
-> 📸 **Screenshot placeholder:** Terminal showing the colored prompts and auto-greeting.
-> Save as `workshop/images/07-step4-polish.png`.
+> 📸 **Screenshot placeholder:** Terminal showing the banner and the agent greeting in-character.
+> Save as `workshop/images/06-step3-prompts.png`.
 
 
 
@@ -365,8 +341,8 @@ You built an AI agent that:
 
 - ✅ Uses a model deployment from Microsoft Foundry
 - ✅ Calls live tools through an MCP server
-- ✅ Loads its persona and welcome banner from MCP **prompts**
-- ✅ Greets the user automatically with a polished, colored chat UI
+- ✅ Loads its persona and welcome banner from MCP **prompts** and greets
+  the user automatically
 
 The final, complete source is in [`sample/agent.py`](../sample/agent.py).
 

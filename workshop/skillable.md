@@ -50,7 +50,7 @@ A quick word on vocabulary before you click around: a **model** (like
 claude-sonnet-4) is the underlying AI. A **deployment** is your
 personal, named instance of that model running in your project, with its
 own endpoint, key, and rate limits. Your code talks to the *deployment
-name*, not the model name - that's the bit you'll wire into your `.env`
+name*, not the model name - that's the bit you'll wire into your '.env'
 in a moment.
 
 1. In the top navigation, make sure **Build** is selected.
@@ -69,9 +69,9 @@ in a moment.
      with. You can switch deployments here without leaving the page.
    - **Instructions** (system prompt) - the box on the left where you set
      the agent's persona and rules. Try pasting
-     `You are a pirate. Answer every question in pirate slang.` and chat
+     'You are a pirate. Answer every question in pirate slang.' and chat
      again to see the effect.
-   - **Chat** - the main conversation area. Type `Hello world` and verify
+   - **Chat** - the main conversation area. Type 'Hello world' and verify
      the model responds. Use it to iterate on prompts before committing
      them to code.
    - **View code** - opens a side panel with ready-to-paste snippets
@@ -98,8 +98,8 @@ instance to use). All three live one click away.
 ![Endpoint keys](images/03-endpoint-keys.png)
 
 > 🔐 Treat the API key like a password. Don't paste it into chats,
-> screenshots, or commits. The `.env` file you'll edit next is already
-> listed in `.gitignore` so it stays on your machine.
+> screenshots, or commits. The '.env' file you'll edit next is already
+> listed in '.gitignore' so it stays on your machine.
 
 3. Open the existing ".env" file in the "sparkles-agent/" folder and replace
    the placeholder values with the ones you just copied:
@@ -115,28 +115,28 @@ instance to use). All three live one click away.
 With Foundry on the line, time to write some code. You'll be using the
 **Microsoft Agent Framework** - a small Python library that wraps a chat
 model, a session (the conversation history), and any tools you give it
-into a single `Agent` object you can talk to.
+into a single 'Agent' object you can talk to.
 
 ### Setup
 
-Open a terminal in the `sparkles-agent/` folder of this repo:
+Open a terminal in the 'sparkles-agent/' folder of this repo:
 
 ```bash
 cd sparkles-agent
 ```
 
-The folder already contains a `requirements.txt` with the dependencies you need:
+The folder already contains a 'requirements.txt' with the dependencies you need:
 
-```txt
+```
 agent-framework
 agent-framework-foundry
 python-dotenv
 ```
 
-- `agent-framework` - the core `Agent`, sessions, and tool plumbing.
-- `agent-framework-foundry` - the Foundry-specific chat clients (this is
+- 'agent-framework' - the core 'Agent', sessions, and tool plumbing.
+- 'agent-framework-foundry' - the Foundry-specific chat clients (this is
   what knows how to talk to your Anthropic deployment on Foundry).
-- `python-dotenv` - loads your `.env` file into environment variables.
+- 'python-dotenv' - loads your '.env' file into environment variables.
 
 Install them:
 
@@ -145,11 +145,11 @@ pip install -r requirements.txt
 ```
 
 > 💡 **Tip:** if you're working locally, create a virtual environment
-> first (`python -m venv .venv && source .venv/bin/activate`) so these
+> first ('python -m venv .venv && source .venv/bin/activate') so these
 > packages don't pollute your global Python. In Codespaces this is
 > already taken care of.
 
-Create an empty `agent.py` file in the same folder. You'll build it up in
+Create an empty 'agent.py' file in the same folder. You'll build it up in
 three small steps - run it after each step to see the agent grow.
 
 
@@ -160,9 +160,9 @@ Start with a minimal agent that just talks to the model. No tools, no
 persona - just confirm we can reach Foundry. Three pieces show up here
 that you'll see in every agent you build:
 
-- **Chat client** - the connection to the model. `AnthropicFoundryClient`
+- **Chat client** - the connection to the model. 'AnthropicFoundryClient'
   knows how to call your Claude deployment on Foundry using the values
-  from `.env`.
+  from '.env'.
 - **Agent** - wraps the chat client (and later, tools and instructions).
 - **Session** - holds the conversation history so the agent remembers
   what was said earlier in the chat.
@@ -245,10 +245,10 @@ for pickup - the agent needs **tools**.
 > Cupcake Store team already runs an MCP server with all the cupcake
 > tools you need.
 
-Two changes to your `agent.py`:
+Two changes to your 'agent.py':
 
-1. Import `MCPStreamableHTTPTool`, point it at the server's URL, and call `connect()`.
-2. Pass it to the `Agent` via `tools=`.
+1. Import 'MCPStreamableHTTPTool', point it at the server's URL, and call 'connect()'.
+2. Pass it to the 'Agent' via 'tools='.
 
 The agent will discover the available tools automatically and decide when
 to call them based on what you ask.
@@ -343,10 +343,10 @@ MCP servers can expose **prompts** - reusable text snippets curated by
 the server owner. When the persona changes, the server updates; your
 code keeps working without a redeploy. The Cupcake Store exposes two:
 
-- `agent_instructions` - the persona / system prompt
-- `welcome_banner` - a friendly greeting to print at startup
+- 'agent_instructions' - the persona / system prompt
+- 'welcome_banner' - a friendly greeting to print at startup
 
-Fetch both from the server, pass `agent_instructions` to the `Agent`, and
+Fetch both from the server, pass 'agent_instructions' to the 'Agent', and
 print the banner before the chat starts.
 
 ```python
@@ -414,7 +414,7 @@ if __name__ == "__main__":
     asyncio.run(main())
 ```
 
-The agent now also kicks off the conversation itself by sending a `"hello"`,
+The agent now also kicks off the conversation itself by sending a 'hello',
 so the user sees the persona greet them right away.
 
 **Run it:**
@@ -425,7 +425,7 @@ python agent.py
 
 **Try it:** Now it's time to order your cupcake! 
 
-```txt
+```
 Assistant:
 Hi there! Ready to pick out a cupcake? ...
 ```
@@ -456,7 +456,7 @@ the glue, MCP for tools and prompts** - is the same one you'd use to
 build a support bot, a coding assistant, or an internal company helper.
 Swap the MCP server, change the persona, and you have a different agent.
 
-The full source is in [`sample/agent.py`](../sample/agent.py).
+The full source is in ['sample/agent.py'](../sample/agent.py).
 
 ### Where to go next
 
@@ -464,8 +464,8 @@ The full source is in [`sample/agent.py`](../sample/agent.py).
   once - try giving the agent a weather server or a calendar server in
   addition to the cupcake store.
 - **Swap the model.** Deploy a different model on Foundry, change
-  `FOUNDRY_MODEL_DEPLOYMENT`, and see how the personality shifts.
-- **Stream the responses.** Use `agent.run_stream(...)` for token-by-token
+  'FOUNDRY_MODEL_DEPLOYMENT', and see how the personality shifts.
+- **Stream the responses.** Use 'agent.run_stream(...)' for token-by-token
   output so the chat feels snappier.
 - **Build your own MCP server.** Once you've consumed one, writing one
   is the natural next step - and now your agent can use it.
@@ -476,7 +476,7 @@ The full source is in [`sample/agent.py`](../sample/agent.py).
 
 | Problem | Fix |
 | -- | -- |
-| `Missing required environment variable` | Check `.env` is in the `sparkles-agent/` folder and the variable names match |
-| `401 Unauthorized` | Wrong API key or endpoint - re-copy from Foundry |
-| `DeploymentNotFound` | `FOUNDRY_MODEL_DEPLOYMENT` must match the **deployment** name, not the model name |
-| `ImportError: cannot import name 'Agent'` | Run `pip install -r requirements.txt` again |
+| 'Missing required environment variable' | Check '.env' is in the 'sparkles-agent/' folder and the variable names match |
+| '401 Unauthorized' | Wrong API key or endpoint - re-copy from Foundry |
+| 'DeploymentNotFound' | 'FOUNDRY_MODEL_DEPLOYMENT' must match the **deployment** name, not the model name |
+| 'ImportError: cannot import name 'Agent'' | Run 'pip install -r requirements.txt' again |

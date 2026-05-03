@@ -375,7 +375,7 @@ The final, complete source is in [`sample/agent.py`](../sample/agent.py).
 ## Troubleshooting
 
 | Problem | Fix |
-|||
+| -- | -- |
 | `Missing required environment variable` | Check `.env` is in the `agent-framework/` folder and the variable names match |
 | `401 Unauthorized` | Wrong API key or endpoint - re-copy from Foundry |
 | `DeploymentNotFound` | `FOUNDRY_MODEL_DEPLOYMENT` must match the **deployment** name, not the model name |

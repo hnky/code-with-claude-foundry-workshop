@@ -13,14 +13,8 @@ step to see it grow.
 In Visual Studio Code, open a new terminal (**Terminal > New Terminal**).
 It opens in 'c:\agents' - the folder where the workshop code lives.
 
-The Python dependencies are already installed on the lab VM. For
+The Python **dependencies are already installed** on the lab VM. For
 reference, here's what's in 'requirements.txt':
-
-```
-agent-framework
-agent-framework-foundry
-python-dotenv
-```
 
 - **agent-framework** - the core 'Agent', sessions, and tool plumbing.
 - **agent-framework-foundry** - the Foundry-specific chat clients (this is

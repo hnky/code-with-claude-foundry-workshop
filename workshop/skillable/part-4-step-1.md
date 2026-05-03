@@ -67,11 +67,9 @@ In the VS Code terminal at the bottom of the editor, run:
 python agent.py
 ```
 
-```txt
-Hello!
-```
+Send the message `Hello!` to the agent.
 
-Type 'exit' when you're done to stop the agent.
+Type **exit** when you're done to stop the agent.
 
 ---
 

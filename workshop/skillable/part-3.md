@@ -7,7 +7,7 @@ instance to use). All three live one click away.
 
 1. In the playground - click the **Details** tab at the top.
 2. On the **Details** tab, copy:
-   - **Target URI** - the endpoint, e.g. "https://<your-resource>.services.ai.azure.com/anthropic"
+   - **Target URI** - the endpoint, e.g. "https://(your-resource).services.ai.azure.com/anthropic"
    - **Key** - click the eye icon to reveal it, then the copy icon next to it
    - **Name** of the deployment (e.g. claude-sonnet-4-6) - shown under **Deployment info**
 

@@ -84,9 +84,9 @@ python agent.py
 ```
 
 **Try it:**
-```
-What flavors do you have today?
-```
+
+Send the message `What flavors do you have today?` to the agent.
+
 
 Type 'exit' when you're done to stop the agent.
 

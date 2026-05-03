@@ -353,6 +353,7 @@ python agent.py
 **Try it:** Now it's time to order your cupcake! 🧁 Answer the agent's
 questions, pick your favorite flavor, place the order, and pick it up.
 
+```
 Assistant:
 Hi there! Ready to pick out a cupcake? ...
 ```

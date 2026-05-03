@@ -22,12 +22,18 @@ generic chatbot into Sparkles itself.
 
 By the end, you'll have ordered a cupcake from an agent you built from
 scratch - and learned how Foundry, the Agent Framework, and MCP fit
-together along the way.
+together along the way. 
 
 **Prerequisites**
 - Access to an Azure subscription with Microsoft Foundry
 - Python 3.10+ installed
 - This repository cloned locally (or opened in a Codespace)
+
+> **What is Microsoft Foundry?** Foundry is Microsoft's hosted platform
+> for shipping AI applications. It's where you deploy models (OpenAI,
+> Anthropic, Mistral, your own fine-tunes), give them an endpoint and a
+> key, and then wire them into your code. Think of it as the cloud
+> control panel for the brains of your agent.
 
 
 
@@ -42,6 +48,13 @@ together along the way.
 
 
 ## Part 2 - Find a Model and Test It
+
+A quick word on vocabulary before you click around: a **model** (like
+`claude-sonnet-4`) is the underlying AI. A **deployment** is your
+personal, named instance of that model running in your project, with its
+own endpoint, key, and rate limits. Your code talks to the *deployment
+name*, not the model name - that's the bit you'll wire into your `.env`
+in a moment.
 
 1. In the top navigation, make sure **Build** is selected.
 2. In the left-hand navigation, click **Models**.
@@ -74,6 +87,11 @@ together along the way.
 
 ## Part 3 - Get the Endpoint and API Key
 
+Now that you know the model works, you need three things to call it from
+your own code: the **endpoint** (where to send requests), the **API key**
+(proof you're allowed to), and the **deployment name** (which model
+instance to use). All three live one click away.
+
 1. In the playground - click the **Details** tab at the top.
 2. On the **Details** tab, copy:
    - **Target URI** - the endpoint, e.g. `https://<your-resource>.services.ai.azure.com/anthropic`
@@ -81,6 +99,10 @@ together along the way.
    - **Name** of the deployment (e.g. `claude-sonnet-4-6`) - shown under **Deployment info**
 
 ![Endpoint keys](images/03-endpoint-keys.png)
+
+> 🔐 Treat the API key like a password. Don't paste it into chats,
+> screenshots, or commits. The `.env` file you'll edit next is already
+> listed in `.gitignore` so it stays on your machine.
 
 3. Open the existing `.env` file in the `agent-framework/` folder and replace
    the placeholder values with the ones you just copied:
@@ -95,9 +117,14 @@ together along the way.
 
 ## Part 4 - Build the Agent
 
+With Foundry on the line, time to write some code. You'll be using the
+**Microsoft Agent Framework** - a small Python library that wraps a chat
+model, a session (the conversation history), and any tools you give it
+into a single `Agent` object you can talk to.
+
 ### Setup
 
-Open a terminal in the `agent-framework/` folder:
+Open a terminal in the `agent-framework/` folder of this repo:
 
 ```bash
 cd agent-framework
@@ -111,21 +138,39 @@ agent-framework-foundry
 python-dotenv
 ```
 
+- `agent-framework` - the core `Agent`, sessions, and tool plumbing.
+- `agent-framework-foundry` - the Foundry-specific chat clients (this is
+  what knows how to talk to your Anthropic deployment on Foundry).
+- `python-dotenv` - loads your `.env` file into environment variables.
+
 Install them:
 
 ```bash
 pip install -r requirements.txt
 ```
 
+> 💡 **Tip:** if you're working locally, create a virtual environment
+> first (`python -m venv .venv && source .venv/bin/activate`) so these
+> packages don't pollute your global Python. In Codespaces this is
+> already taken care of.
+
 Create an empty `agent.py` file in the same folder. You'll build it up in
-three small steps.
+three small steps - run it after each step to see the agent grow.
 
 
 
 ### Step 1 - Hello World Agent
 
 Start with a minimal agent that just talks to the model. No tools, no
-persona - just confirm we can reach Foundry.
+persona - just confirm we can reach Foundry. Three pieces show up here
+that you'll see in every agent you build:
+
+- **Chat client** - the connection to the model. `AnthropicFoundryClient`
+  knows how to call your Claude deployment on Foundry using the values
+  from `.env`.
+- **Agent** - wraps the chat client (and later, tools and instructions).
+- **Session** - holds the conversation history so the agent remembers
+  what was said earlier in the chat.
 
 ```python
 """Sparkles - The Cupcake ordering agent"""
@@ -193,14 +238,25 @@ Hi there! How can I help you today?
 
 ### Step 2 - Connect to the Cupcake Store MCP Server
 
-Now give the agent **real tools** by connecting to the Cupcake Store MCP
-server. The server exposes tools the agent can call (list flavors, place an
-order, etc.).
+A chatbot that only chats is just an expensive parrot. To actually *do*
+things - check what flavors are in stock, place an order, mark it ready
+for pickup - the agent needs **tools**.
 
-Two changes:
+> **What is MCP?** The **Model Context Protocol** is an open standard
+> for letting AI agents talk to external systems. An MCP server publishes
+> a set of tools (functions the agent can call), prompts (reusable
+> instruction snippets), and resources (data) over HTTP. Your agent just
+> needs the URL - the framework handles discovery and invocation. The
+> Cupcake Store team already runs an MCP server with all the cupcake
+> tools you need.
 
-1. Import `MCPStreamableHTTPTool`, create it, and `connect()`.
+Two changes to your `agent.py`:
+
+1. Import `MCPStreamableHTTPTool`, point it at the server's URL, and call `connect()`.
 2. Pass it to the `Agent` via `tools=`.
+
+The agent will discover the available tools automatically and decide when
+to call them based on what you ask.
 
 ```python
 """Sparkles - The Cupcake ordering agent"""
@@ -282,8 +338,15 @@ still acting like a generic assistant - it has no persona yet.
 
 ### Step 3 - Load Instructions and a Welcome Banner from MCP
 
-MCP servers can also expose **prompts** - pre-written text the server owner
-curates. The Cupcake Store exposes two:
+The agent works, but it still sounds like a generic assistant. The
+Cupcake Store has *opinions* about how its agent should behave - tone,
+upsells, allergy warnings, the works - and it doesn't want every
+developer to copy-paste the latest version of that persona into their
+code. So those instructions live on the **server**, not in your repo.
+
+MCP servers can expose **prompts** - reusable text snippets curated by
+the server owner. When the persona changes, the server updates; your
+code keeps working without a redeploy. The Cupcake Store exposes two:
 
 - `agent_instructions` - the persona / system prompt
 - `welcome_banner` - a friendly greeting to print at startup
@@ -377,14 +440,31 @@ Hi there! Ready to pick out a cupcake? ...
 
 ## Recap
 
-You built an AI agent that:
+In under a hundred lines of Python, you built an AI agent that:
 
 - ✅ Uses a model deployment from Microsoft Foundry
 - ✅ Calls live tools through an MCP server
 - ✅ Loads its persona and welcome banner from MCP **prompts** and greets
   the user automatically
 
+The pattern you just used - **Foundry for the model, Agent Framework for
+the glue, MCP for tools and prompts** - is the same one you'd use to
+build a support bot, a coding assistant, or an internal company helper.
+Swap the MCP server, change the persona, and you have a different agent.
 
+The full source is in [`sample/agent.py`](../sample/agent.py).
+
+### Where to go next
+
+- **Add another MCP server.** The framework can connect to multiple at
+  once - try giving the agent a weather server or a calendar server in
+  addition to the cupcake store.
+- **Swap the model.** Deploy a different model on Foundry, change
+  `FOUNDRY_MODEL_DEPLOYMENT`, and see how the personality shifts.
+- **Stream the responses.** Use `agent.run_stream(...)` for token-by-token
+  output so the chat feels snappier.
+- **Build your own MCP server.** Once you've consumed one, writing one
+  is the natural next step - and now your agent can use it.
 
 
 

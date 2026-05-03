@@ -59,14 +59,13 @@ In this lab you will:
 
 ## Part 3 - Get the Endpoint and API Key
 
-1. Back on **Build > Models**, click your deployment to open the details panel on the right.
-2. Copy:
+1. In the playground - click the **Details** tab at the top.
+2. On the **Details** tab, copy:
    - **Target URI** - the endpoint, e.g. `https://<your-resource>.services.ai.azure.com/anthropic`
-   - **Key** - click the eye icon to reveal it, then the copy icon
-   - **Name** of the deployment (e.g. `claude-sonnet-4-6`)
+   - **Key** - click the eye icon to reveal it, then the copy icon next to it
+   - **Name** of the deployment (e.g. `claude-sonnet-4-6`) - shown under **Deployment info**
 
-> 📸 **Screenshot placeholder:** Deployment details panel showing Target URI and Key (blur the key!).
-> Save as `workshop/images/03-endpoint-keys.png`.
+![Endpoint keys](images/03-endpoint-keys.png)
 
 3. Open the existing `.env` file in the `agent-framework/` folder and replace
    the placeholder values with the ones you just copied:
@@ -104,11 +103,7 @@ pip install -r requirements.txt
 ```
 
 Create an empty `agent.py` file in the same folder. You'll build it up in
-three small steps. After each step, run:
-
-```bash
-python agent.py
-```
+three small steps.
 
 
 
@@ -163,10 +158,11 @@ if __name__ == "__main__":
     asyncio.run(main())
 ```
 
-The `\033[1;35m...\033[0m` escape codes print `You:` and `Assistant:` in
-bold magenta so the transcript is easier to read.
-
 **Try it:**
+
+```bash
+python agent.py
+```
 
 ```
 You:
@@ -176,8 +172,7 @@ Assistant:
 Hi there! How can I help you today?
 ```
 
-> 📸 **Screenshot placeholder:** Terminal showing the first "Hello" exchange.
-> Save as `workshop/images/04-step1-hello.png`.
+![Hello world](images/04-step1-hello.png)
 
 
 
@@ -205,7 +200,6 @@ from agent_framework.foundry import AnthropicFoundryClient
 
 # 1. Load environment variables from .env
 load_dotenv()
-
 
 async def main() -> None:
     # 2. Configure the chat model (Claude on Microsoft Foundry)
@@ -248,6 +242,12 @@ if __name__ == "__main__":
     asyncio.run(main())
 ```
 
+**Run it:**
+
+```bash
+python agent.py
+```
+
 **Try it:**
 
 ```
@@ -258,11 +258,10 @@ Assistant:
 Here's what we have in stock today: ...
 ```
 
+![](images/05-step2-mcp.png)
+
 The agent is now calling MCP tools on the Cupcake Store server. But it's
 still acting like a generic assistant - it has no persona yet.
-
-> 📸 **Screenshot placeholder:** Terminal showing the agent listing flavors and placing an order.
-> Save as `workshop/images/05-step2-mcp.png`.
 
 
 
@@ -278,6 +277,20 @@ Fetch both from the server, pass `agent_instructions` to the `Agent`, and
 print the banner before the chat starts.
 
 ```python
+"""Sparkles - The Cupcake ordering agent"""
+
+import asyncio
+import os
+
+from dotenv import load_dotenv
+
+from agent_framework import Agent, MCPStreamableHTTPTool  
+from agent_framework.foundry import AnthropicFoundryClient
+
+# 1. Load environment variables from .env
+load_dotenv()
+
+
 async def main() -> None:
     # 2. Configure the chat model (Claude on Microsoft Foundry)
     chat_client = AnthropicFoundryClient(
@@ -323,28 +336,28 @@ async def main() -> None:
         print(f"\n\033[1;35mAssistant:\033[0m\n{response.text}\n")
 
     await mcp_tool.close()
+
+if __name__ == "__main__":
+    asyncio.run(main())
 ```
 
 The agent now also kicks off the conversation itself by sending a `"hello"`,
 so the user sees the persona greet them right away.
 
-**Try it:** You should now see the welcome banner first, then the agent
-greeting you in-character as a friendly cupcake-shop concierge.
+**Run it:**
 
+```bash
+python agent.py
 ```
-🧁 Welcome to the Cupcake Store! ...
+
+**Try it:** Now it's time to order your cupcake! 🧁 Answer the agent's
+questions, pick your favorite flavor, place the order, and pick it up.
 
 Assistant:
 Hi there! Ready to pick out a cupcake? ...
 ```
 
-That's it - your `agent.py` now matches the final sample in
-[`sample/agent.py`](../sample/agent.py).
-
-> 📸 **Screenshot placeholder:** Terminal showing the banner and the agent greeting in-character.
-> Save as `workshop/images/06-step3-prompts.png`.
-
-
+![](images/06-step3-prompts.png)
 
 ## Recap
 

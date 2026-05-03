@@ -1,4 +1,4 @@
-# Workshop: Build an AI Agent with Microsoft Foundry & Microsoft Agent Framework
+# Build AI Agents using Claude in Microsoft Foundry
 
 Welcome to **Sparkles**, the friendliest little cupcake shop on the
 internet. Sparkles has a problem most bakeries would love to have: too
@@ -31,6 +31,16 @@ together along the way.
 > control panel for the brains of your agent.
 > [Learn more about Microsoft Foundry](https://learn.microsoft.com/en-us/azure/foundry/what-is-foundry?
 
+## Login into the Machine
+Everything you'll do today happens on the Windows 11 lab VM on the left
+of your screen - browser, code editor, terminal, the lot. Sign in once
+and you're set for the rest of the workshop. Click inside the VM,
+unlock it, and use the credentials below .
+
+**Username:** +++@lab.VirtualMachine(Windows11).Username+++   
+**Password:** +++@lab.VirtualMachine(Windows11).Password+++  
+
+===
 
 ## Part 1 - Log in to Microsoft Foundry
 
@@ -43,6 +53,7 @@ together along the way.
 
 ![Foundry landing page with the New Foundry toggle on and the project selected](images/01-foundry-home.png)
 
+===
 
 ## Part 2 - Find a Model and Test It
 
@@ -80,7 +91,7 @@ in a moment.
 
 ![Deployed models](images/02b-playground-hello.png)
 
-
+===
 
 ## Part 3 - Get the Endpoint and API Key
 
@@ -109,6 +120,8 @@ instance to use). All three live one click away.
    FOUNDRY_API_KEY="<your-api-key>"
    FOUNDRY_MODEL_DEPLOYMENT="<your-deployment-name>"
    ```
+
+===
 
 ## Part 4 - Build the Agent
 
@@ -151,7 +164,6 @@ pip install -r requirements.txt
 
 Create an empty 'agent.py' file in the same folder. You'll build it up in
 three small steps - run it after each step to see the agent grow.
-
 
 
 ### Step 1 - Hello World Agent
@@ -442,6 +454,8 @@ Hi there! Ready to pick out a cupcake? ...
 
 ![](images/07-dashboard.png)
 
+===
+
 ## Recap
 
 In under a hundred lines of Python, you built an AI agent that:
@@ -469,7 +483,6 @@ The full source is in ['sample/agent.py'](../sample/agent.py).
   output so the chat feels snappier.
 - **Build your own MCP server.** Once you've consumed one, writing one
   is the natural next step - and now your agent can use it.
-
 
 
 ## Troubleshooting

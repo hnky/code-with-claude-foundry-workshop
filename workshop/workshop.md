@@ -104,7 +104,7 @@ instance to use). All three live one click away.
 > screenshots, or commits. The `.env` file you'll edit next is already
 > listed in `.gitignore` so it stays on your machine.
 
-3. Open the existing `.env` file in the `agent-framework/` folder and replace
+3. Open the existing `.env` file in the `sparkles-agent/` folder and replace
    the placeholder values with the ones you just copied:
 
    ```env
@@ -124,10 +124,10 @@ into a single `Agent` object you can talk to.
 
 ### Setup
 
-Open a terminal in the `agent-framework/` folder of this repo:
+Open a terminal in the `sparkles-agent/` folder of this repo:
 
 ```bash
-cd agent-framework
+cd sparkles-agent
 ```
 
 The folder already contains a `requirements.txt` with the dependencies you need:
@@ -472,7 +472,7 @@ The full source is in [`sample/agent.py`](../sample/agent.py).
 
 | Problem | Fix |
 | -- | -- |
-| `Missing required environment variable` | Check `.env` is in the `agent-framework/` folder and the variable names match |
+| `Missing required environment variable` | Check `.env` is in the `sparkles-agent/` folder and the variable names match |
 | `401 Unauthorized` | Wrong API key or endpoint - re-copy from Foundry |
 | `DeploymentNotFound` | `FOUNDRY_MODEL_DEPLOYMENT` must match the **deployment** name, not the model name |
 | `ImportError: cannot import name 'Agent'` | Run `pip install -r requirements.txt` again |

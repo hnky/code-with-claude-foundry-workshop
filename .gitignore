@@ -3,7 +3,7 @@
 .env.local
 *.env
 !.env.sample
-!agent-framework/.env
+!sparkles-agent/.env
 
 # Python
 __pycache__/

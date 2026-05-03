@@ -5,7 +5,7 @@
     **Username**: +++@lab.CloudPortalCredential(User1).Username+++    
     **Password (TAP)**:  +++@lab.CloudPortalCredential(User1).AccessToken+++     
 3. In the top bar, toggle the **New Foundry** switch on.
-4. Your **project** is selected by default - no need to pick one.
+4. From the project dropdown, select your project and click **Let's go**.
 
 ![Foundry landing page with the New Foundry toggle on and the project selected](../images/01-foundry-home.png)
 

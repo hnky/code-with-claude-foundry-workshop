@@ -69,6 +69,8 @@ python agent.py
 
 Send the message `Hello!` to the agent.
 
+If you see a 404 error, check that the endpoint URL in your '.env' file ends with "/anthropic" and not with "/v1/messages".
+
 Type **exit** when you're done to stop the agent.
 
 ---

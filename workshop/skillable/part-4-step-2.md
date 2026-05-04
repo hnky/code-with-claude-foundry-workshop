@@ -87,6 +87,7 @@ python agent.py
 
 Send the message `What flavors do you have today?` to the agent.
 
+Do *not* order a cupcake yet! This step is just to confirm that the agent can call the MCP tools to check inventory and answer questions about flavors. Don't worry, you'll get to order a cupcake in the next step!
 
 Type 'exit' when you're done to stop the agent.
 

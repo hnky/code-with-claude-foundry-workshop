@@ -16,8 +16,8 @@ in a moment.
    chat with it right there.
 ![Deployed models](../images/02-models-deployments.png)
 
-5. Take a moment to explore the **Playground** - it's the fastest way to
-   sanity-check a model before you wire it into code:
+5. Take a moment to explore the **Playground**, the fastest way to
+   experiment with a model before you wire it into code:
 
    - **Model** (top of the panel) - shows which deployment you're chatting
      with. You can switch deployments here without leaving the page.

@@ -37,7 +37,7 @@ together along the way.
 Everything you'll do today happens on the Windows 11 lab VM on the left
 of your screen - browser, code editor, terminal, the lot. Sign in once
 and you're set for the rest of the workshop. Click inside the VM,
-unlock it, and use the credentials below .
+unlock it, and use the credentials below:
 
 **Username:** +++@lab.VirtualMachine(Windows11).Username+++   
 **Password:** +++@lab.VirtualMachine(Windows11).Password+++

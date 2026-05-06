@@ -28,7 +28,7 @@ in a moment.
    - **Chat** - the main conversation area. Type `Hello world` and verify
      the model responds. Use it to iterate on prompts before committing
      them to code.
-   - **View code** - opens a side panel with ready-to-paste snippets
+   - **Code** - opens a side panel with ready-to-paste snippets
      (Python, curl, etc.) that show exactly how to call this deployment
      from your own app, including the endpoint and headers.
 

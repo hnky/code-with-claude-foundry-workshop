@@ -25,7 +25,6 @@ An empty **agent.py** file is already waiting for you in 'c:\agents'.
 
 ---
 
-✅ **In this step you have:** opened the VS Code terminal in 'c:\agents'
-and confirmed the Python dependencies and an empty 'agent.py' are ready.
+✅ **In this step you have:** opened the VS Code terminal in 'c:\agents', learned about the installed Python packages, and located the empty 'agent.py'.
 
 ➡️ Click **Next** to write your first Hello World agent.

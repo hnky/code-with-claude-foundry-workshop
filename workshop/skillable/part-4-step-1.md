@@ -59,6 +59,8 @@ if __name__ == "__main__":
     asyncio.run(main())
 ```
 
+Make sure you save the program after pasting in the code. If you see a ⚫️ next to the file in VS Code, that mean's it's not yet saved. You can use File > Save or your standard keyboard shortcut for saving.
+
 **Try it:**
 
 In the VS Code terminal at the bottom of the editor, run:
@@ -71,7 +73,7 @@ Send the message `Hello!` to the agent.
 
 If you see a 404 error, check that the endpoint URL in your '.env' file ends with "/anthropic" and not with "/v1/messages".
 
-Type **exit** when you're done to stop the agent.
+Type **exit** when you're done to stop the agent. (If you're used to running Python programs on a Mac, CTRL+C will not exit the program - you must type **exit** instead.)
 
 ---
 

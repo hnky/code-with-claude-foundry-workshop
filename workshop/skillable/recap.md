@@ -12,8 +12,6 @@ lines of Python, you built something that:
 - ✅ Pulls its **persona** and **welcome banner** straight from the MCP
   server's **prompts**, so the same code becomes a different agent the
   moment the server changes its mind.
-- ✅ Greets the customer first by kicking the conversation off with an
-  automatic 'hello'.
 
 The pattern you just used - **Foundry for the model, the Agent
 Framework for the glue, MCP for tools and prompts** - is exactly the
@@ -23,19 +21,6 @@ brain and hands. Swap the MCP server for a different one, point at a
 different model, tweak the persona, and you have an entirely new agent
 without rewriting the plumbing.
 
-A few things worth taking with you:
-
-- **Models are commodities, integration is the work.** The interesting
-  bits weren't the model call - they were the tools, the session, and
-  the prompts. That's where the real product lives.
-- **Keep the persona out of your code.** Letting the MCP server own
-  'agent_instructions' means the team that cares about tone can update
-  it without ever asking a developer to redeploy.
-- **MCP is just HTTP + a contract.** Any service you can wrap behind
-  an MCP server can become a tool for any agent that speaks the
-  protocol.
-
-
 ### Where to go next
 
 Now that the basic loop works, here are a few directions to push it:
@@ -44,10 +29,8 @@ Now that the basic loop works, here are a few directions to push it:
   once. Try giving the agent a weather server, a calendar, or a search
   tool alongside the cupcake store and watch it pick the right tool
   for each question.
-- **Swap the model.** Deploy a different model on Foundry (a smaller
-  Claude, a GPT, a Mistral), change 'FOUNDRY_MODEL_DEPLOYMENT' in your
-  '.env', and see how the personality, latency, and tool-calling style
-  shift - same code, different brain.
+- **Swap the model.** Deploy a different model on Foundry (like Opus or Haiku),
+  change 'FOUNDRY_MODEL_DEPLOYMENT' in your '.env', and see how the personality, latency, and tool-calling style shift.
 - **Stream the responses.** Replace 'agent.run(...)' with
   'agent.run_stream(...)' to print tokens as they arrive. Long answers
   feel dramatically snappier when the user sees the first words right
@@ -58,6 +41,5 @@ Now that the basic loop works, here are a few directions to push it:
 - **Build your own MCP server.** Now that you've consumed one, writing
   one is the natural next step - and the moment you do, every agent
   that speaks MCP (yours or someone else's) can use your tools.
-
 
 **Thanks for building with us - now go eat your cupcake. 🧁**

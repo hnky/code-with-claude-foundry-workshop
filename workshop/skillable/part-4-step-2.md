@@ -75,6 +75,8 @@ if __name__ == "__main__":
     asyncio.run(main())
 ```
 
+Make sure you save the program after pasting in the code. If you see a ⚫️ next to the file in VS Code, that mean's it's not yet saved. You can use File > Save or your standard keyboard shortcut for saving.
+
 **Run it:**
 
 In the VS Code terminal at the bottom of the editor, run:

@@ -1,0 +1,7 @@
+agent-framework
+agent-framework-foundry
+python-dotenv
+jupyter
+ipykernel
+Pillow
+requests

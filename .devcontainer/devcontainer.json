@@ -14,7 +14,8 @@
         "ms-azuretools.vscode-docker",
         "ms-vscode.azurecli",
         "GitHub.copilot",
-        "GitHub.copilot-chat"
+        "GitHub.copilot-chat",
+        "ms-toolsai.jupyter"
       ]
     }
   }

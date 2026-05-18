@@ -48,3 +48,6 @@ Thumbs.db
 
 # Logs
 *.log
+
+# Do Not Commit
+.do-not-commit/

@@ -1,0 +1,9 @@
+agent-framework
+agent-framework-foundry
+azure-ai-projects
+azure-identity
+python-dotenv
+jupyter
+ipykernel
+Pillow
+requests
